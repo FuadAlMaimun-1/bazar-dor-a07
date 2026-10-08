@@ -103,7 +103,7 @@ const Product = () => {
         )}
 
         {/* Section C */}
-        <div>
+        <div id="সব-পণ্য">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
               সব পণ্য

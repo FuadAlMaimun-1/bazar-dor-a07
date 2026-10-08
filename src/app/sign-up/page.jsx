@@ -105,7 +105,7 @@ const SignUpPage = () => {
               <input
                 type="text"
                 name="name"
-                autoComplete="name"
+                autoComplete="current-name"
                 required
                 placeholder="আপনার নাম"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-[#00a651] focus:bg-white focus:ring-1 focus:ring-[#00a651]"
@@ -121,7 +121,7 @@ const SignUpPage = () => {
               <input
                 type="email"
                 name="email"
-                autoComplete="email"
+                autoComplete="new-email"
                 required
                 placeholder="আপনার ইমেইল"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-[#00a651] focus:bg-white focus:ring-1 focus:ring-[#00a651]"

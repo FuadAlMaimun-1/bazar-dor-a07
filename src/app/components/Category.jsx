@@ -7,12 +7,10 @@ import CategoryCard from "@/app/components/CategoryCard";
 const API_URL = "https://api.abcz.workers.dev/api/bazardor";
 
 // সংখ্যাকে বাংলায় রূপান্তর
-const bn = (num) =>
-  String(num ?? 0).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+const bn = (num) => String(num ?? 0).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
 
-const CategoryPage = ({params}) => {
-    const { slug } = use(params);
-
+const CategoryPage = ({ params }) => {
+  const { slug } = use(params);
 
   const [products, setProducts] = useState([]);
   const [sort, setSort] = useState("default");
@@ -43,19 +41,17 @@ const CategoryPage = ({params}) => {
     return 0;
   });
 
-  const categoryName =
-    products[0]?.category?.name ||
-    products[0]?.categoryNameBn ||
-    "চাল";
+  const firstProduct = products[0];
 
-  const categoryIcon = products[0]?.category?.image || products[0]?.image || "/icons/rice.png";
-  const isImageUrl = categoryIcon?.startsWith("/") || categoryIcon?.startsWith("http");
+  const categoryName = firstProduct?.categoryNameBn || "চাল";
+  const categoryIcon = firstProduct?.image || "/icons/rice.png";
+
+  const isImageUrl =
+    categoryIcon.startsWith("/") || categoryIcon.startsWith("http");
 
   return (
     <main className="min-h-screen bg-[#f4f8f5] px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
-
-        {/* ১. ফিগমা হেডার কার্ড (ইমেজ + টাইটেল) */}
         <div className="flex items-center gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
           <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gray-50 border border-gray-100 p-3">
             {isImageUrl ? (
@@ -114,10 +110,7 @@ const CategoryPage = ({params}) => {
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {sortedProducts.map((product) => (
-              <CategoryCard
-                key={product.id || product._id}
-                product={product}
-              />
+              <CategoryCard key={product.id || product._id} product={product} />
             ))}
           </div>
         )}
@@ -134,7 +127,6 @@ const CategoryPage = ({params}) => {
             </p>
           </div>
         )}
-
       </div>
     </main>
   );

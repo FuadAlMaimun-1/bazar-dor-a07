@@ -1,9 +1,20 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import DateDisplay from "./DateDisplay";
 import Link from "next/link";
 
 const Banner = () => {
+    const handleScroll = () => {
+    const section = document.getElementById("সব-পণ্য");
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
   return (
     <div className="mx-auto my-6 max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex bg-white flex-col items-center justify-between gap-8 rounded-3xl p-8 md:flex-row md:p-12">
@@ -25,13 +36,12 @@ const Banner = () => {
             বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
           </p>
 
-          {/* CTA বাটন (একই পেজের #সব-পণ্য সেকশনে স্ক্রোল করবে) */}
-          <Link
-            href="#"
-            className="inline-flex items-center justify-center rounded-xl bg-[#00a651] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#008e45] hover:shadow-lg active:scale-95"
+          <button
+            onClick={handleScroll}
+            className="inline-flex items-center justify-center cursor-pointer rounded-xl bg-[#00a651] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#008e45] hover:shadow-lg active:scale-95"
           >
             সব পণ্য দেখুন
-          </Link>
+          </button>
         </div>
 
     

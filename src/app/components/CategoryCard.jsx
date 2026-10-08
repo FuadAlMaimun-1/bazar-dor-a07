@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 // সংখ্যাকে বাংলায় রূপান্তর করার ইউটিলিটি
 const bn = (num) =>
@@ -16,6 +17,7 @@ const CategoryCard = ({ product }) => {
     (product.image.startsWith("/") || product.image.startsWith("http"));
 
   return (
+   <Link href={`/product/${product.slug}`}>
     <div className="flex flex-col justify-between rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
       {/* Icon / Image + Name */}
       <div className="flex items-start gap-3">
@@ -70,6 +72,7 @@ const CategoryCard = ({ product }) => {
         </span>
       </div>
     </div>
+   </Link>
   );
 };
 

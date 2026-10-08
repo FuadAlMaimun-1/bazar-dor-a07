@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
   }
 
   return (
-    <Link href={`/product/${product.slug}`}>
+    <Link href={`/product/${product.slug}`} className="cursor-pointer">
       <div className="rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
         {/* Product */}
         <div className="flex items-center gap-3">
