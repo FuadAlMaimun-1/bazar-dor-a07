@@ -6,8 +6,11 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { signIn, signUp } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
+    const router = useRouter();
+
   // Email + Password Sign Up
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -37,8 +40,9 @@ const SignUpPage = () => {
     }
 
     if (data) {
-      toast.success("সাইন আপ করা হয়েছে");
-    }
+  toast.success("সাইন আপ করা হয়েছে");
+  router.push("/sign-in");
+}
   };
 
   // Google Sign Up

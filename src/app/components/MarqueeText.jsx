@@ -25,36 +25,46 @@ const MarqueeText = async () => {
   const products = await getPrice();
 
   return (
-    <div className="border-y border-gray-200 bg-gray-50/50 py-2">
-      <Marquee speed={60}>
-        {products?.map((item) => {
-          const isUp = item?.change?.dir === "up";
-          const isDown = item?.change?.dir === "down";
+  <div className="mx-auto w-full max-w-7xl border-y border-gray-200 bg-gray-50/50 py-2">
+  <Marquee speed={60}>
+    {products?.map((item) => {
+      const isUp = item?.change?.dir === "up";
+      const isDown = item?.change?.dir === "down";
 
-          return (
-            <div
-              key={item.id}
-              className="flex items-center gap-2 border-r border-gray-200 px-6 text-sm text-gray-800"
-            >
-              <span className="text-base">{item?.image}</span>
+      return (
+        <div
+          key={item.id}
+          className="flex shrink-0 items-center gap-2 border-r border-gray-200 px-6 text-sm text-gray-800"
+        >
+          <span className="text-base">
+            {item?.image || "🛒"}
+          </span>
 
-              <span className="font-semibold text-gray-900">{item.nameBn}</span>
+          <span className="font-semibold text-gray-900">
+            {item?.nameBn}
+          </span>
 
-              <span className="text-gray-700">
-                {toBanglaNumeral(item.today)} টাকা/কেজি
-              </span>
+          <span className="text-gray-700">
+            {toBanglaNumeral(item?.today)} টাকা/কেজি
+          </span>
 
-              <span
-                className={`font-bold ${item.change?.dir === "up" ? "text-red-600" : "text-emerald-600"}`}
-              >
-                {item.change?.dir === "up" ? "▲" : "▼"}{" "}
-                {toBanglaNumeral(item.change?.pct)}%
-              </span>
-            </div>
-          );
-        })}
-      </Marquee>
-    </div>
+          <span
+            className={`font-bold ${
+              isUp
+                ? "text-emerald-600"
+                : isDown
+                  ? "text-red-600"
+                  : "text-gray-500"
+            }`}
+          >
+            {isUp ? "▲" : isDown ? "▼" : "—"}{" "}
+            {toBanglaNumeral(item?.change?.pct || 0)}%
+          </span>
+        </div>
+      );
+    })}
+  </Marquee>
+</div>
   );
 };
 
