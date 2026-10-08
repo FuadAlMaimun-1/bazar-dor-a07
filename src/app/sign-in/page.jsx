@@ -5,7 +5,7 @@ import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "@/lib/auth-client";
-import { toast } from "@heroui/react";
+import toast from "react-hot-toast";
 
 const SignInPage = () => {
   // Email + Password Sign In
@@ -24,7 +24,7 @@ const SignInPage = () => {
     });
 
     if (error) {
-      toast.danger(error.message);
+      toast.error(error.message);
       console.log(error);
       return;
     }
@@ -37,37 +37,44 @@ const SignInPage = () => {
   // Google Sign In
   const handleGoogleSignIn = async () => {
     try {
-      const { data, error } = await signIn.social({
+      const { error } = await signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: "/?auth=success",
       });
 
       if (error) {
-        toast.danger(
+        toast.error(
           error.message || "গুগল দিয়ে সাইন ইন করা ব্যর্থ হয়েছে"
-        );
-        return;
-      }
-
-      if (data) {
-        toast.success(
-          "স্বাগতম! গুগল দিয়ে সফলভাবে সাইন ইন করা হয়েছে।"
         );
       }
     } catch (error) {
-      console.error(
-        "গুগল দিয়ে সাইন ইন করতে সমস্যা হয়েছে:",
-        error
-      );
+      console.error("Google sign-in error:", error);
+      toast.error("গুগল দিয়ে সাইন ইন করা ব্যর্থ হয়েছে");
+    }
+  };
 
-      toast.danger("গুগল দিয়ে সাইন ইন করা ব্যর্থ হয়েছে");
+  // GitHub Sign In
+  const handleGithubSignIn = async () => {
+    try {
+      const { error } = await signIn.social({
+        provider: "github",
+        callbackURL: "/?auth=success",
+      });
+
+      if (error) {
+        toast.error(
+          error.message || "গিটহাব দিয়ে সাইন ইন করা ব্যর্থ হয়েছে"
+        );
+      }
+    } catch (error) {
+      console.error("GitHub sign-in error:", error);
+      toast.error("গিটহাব দিয়ে সাইন ইন করা ব্যর্থ হয়েছে");
     }
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#f4f8f5] px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-6">
-
         {/* Header */}
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900">
@@ -81,9 +88,7 @@ const SignInPage = () => {
 
         {/* Sign In Card */}
         <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
-
           <form onSubmit={handleSignIn} className="space-y-4">
-
             {/* Email */}
             <div>
               <label className="block text-sm font-semibold text-gray-800">
@@ -93,7 +98,7 @@ const SignInPage = () => {
               <input
                 type="email"
                 name="email"
-                autoComplete="new-email"
+                autoComplete="email"
                 required
                 placeholder="আপনার ইমেইল"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-[#00a651] focus:bg-white focus:ring-1 focus:ring-[#00a651]"
@@ -109,7 +114,7 @@ const SignInPage = () => {
               <input
                 type="password"
                 name="password"
-                autoComplete="new-password"
+                autoComplete="current-password"
                 required
                 placeholder="আপনার পাসওয়ার্ড"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-[#00a651] focus:bg-white focus:ring-1 focus:ring-[#00a651]"
@@ -138,12 +143,11 @@ const SignInPage = () => {
 
           {/* Social Buttons */}
           <div className="grid grid-cols-2 gap-3">
-
             {/* Google */}
             <button
               onClick={handleGoogleSignIn}
               type="button"
-              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
             >
               <FcGoogle className="text-base" />
               <span>Google দিয়ে চালিয়ে যান</span>
@@ -151,13 +155,13 @@ const SignInPage = () => {
 
             {/* GitHub */}
             <button
+              onClick={handleGithubSignIn}
               type="button"
-              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
             >
               <FaGithub className="text-base text-gray-900" />
               <span>GitHub দিয়ে চালিয়ে যান</span>
             </button>
-
           </div>
 
           {/* Sign Up */}
@@ -181,7 +185,6 @@ const SignInPage = () => {
             ← হোম পেজে ফিরে যান
           </Link>
         </div>
-
       </div>
     </div>
   );

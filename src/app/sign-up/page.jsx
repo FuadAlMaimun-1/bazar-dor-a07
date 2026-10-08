@@ -2,24 +2,25 @@
 
 import Link from "next/link";
 import React from "react";
-import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { signUp } from "../../lib/auth-client";
-import { toast } from "@heroui/react";
+import { FcGoogle } from "react-icons/fc";
+import { signIn, signUp } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const SignUpPage = () => {
+  // Email + Password Sign Up
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
 
-    const name = formData.get("name")?.toString();
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
-    const confirmPassword = formData.get("confirmPassword")?.toString();
+    const name = form.elements.name.value;
+    const email = form.elements.email.value;
+    const password = form.elements.password.value;
+    const confirmPassword = form.elements.confirmPassword.value;
 
     if (password !== confirmPassword) {
-      toast.danger("পাসওয়ার্ড মিলছে না");
+      toast.error("পাসওয়ার্ড মিলছে না");
       return;
     }
 
@@ -30,12 +31,52 @@ const SignUpPage = () => {
     });
 
     if (error) {
-      toast.danger(error.message);
+      toast.error(error.message);
       console.log(error);
       return;
     }
 
-    toast.success("সাইন আপ করা হয়েছে");
+    if (data) {
+      toast.success("সাইন আপ করা হয়েছে");
+    }
+  };
+
+  // Google Sign Up
+  const handleGoogleSignUp = async () => {
+    try {
+      const { error } = await signIn.social({
+        provider: "google",
+        callbackURL: "/?auth=success",
+      });
+
+      if (error) {
+        toast.error(
+          error.message || "গুগল দিয়ে সাইন আপ করা ব্যর্থ হয়েছে"
+        );
+      }
+    } catch (error) {
+      console.error("Google sign-up error:", error);
+      toast.error("গুগল দিয়ে সাইন আপ করা ব্যর্থ হয়েছে");
+    }
+  };
+
+  // GitHub Sign Up
+  const handleGithubSignUp = async () => {
+    try {
+      const { error } = await signIn.social({
+        provider: "github",
+        callbackURL: "/?auth=success",
+      });
+
+      if (error) {
+        toast.error(
+          error.message || "গিটহাব দিয়ে সাইন আপ করা ব্যর্থ হয়েছে"
+        );
+      }
+    } catch (error) {
+      console.error("GitHub sign-up error:", error);
+      toast.error("গিটহাব দিয়ে সাইন আপ করা ব্যর্থ হয়েছে");
+    }
   };
 
   return (
@@ -64,6 +105,7 @@ const SignUpPage = () => {
               <input
                 type="text"
                 name="name"
+                autoComplete="name"
                 required
                 placeholder="আপনার নাম"
                 className="mt-1.5 w-full rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-[#00a651] focus:bg-white focus:ring-1 focus:ring-[#00a651]"
@@ -112,6 +154,7 @@ const SignUpPage = () => {
               <input
                 type="password"
                 name="confirmPassword"
+                autoComplete="new-password"
                 required
                 minLength={8}
                 placeholder="আবার লিখুন"
@@ -141,17 +184,21 @@ const SignUpPage = () => {
 
           {/* Social Buttons */}
           <div className="grid grid-cols-2 gap-3">
+            {/* Google */}
             <button
+              onClick={handleGoogleSignUp}
               type="button"
-              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
             >
               <FcGoogle className="text-base" />
               <span>Google দিয়ে চালিয়ে যান</span>
             </button>
 
+            {/* GitHub */}
             <button
+              onClick={handleGithubSignUp}
               type="button"
-              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-[0.98]"
             >
               <FaGithub className="text-base text-gray-900" />
               <span>GitHub দিয়ে চালিয়ে যান</span>
