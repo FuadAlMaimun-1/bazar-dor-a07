@@ -6,8 +6,8 @@ import { useSession, signOut, updateUser } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 const ProfilePage = () => {
+    
   const { data: session, isPending } = useSession();
-
   const [name, setName] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
