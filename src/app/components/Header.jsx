@@ -4,6 +4,7 @@ import Link from "next/link";
 import NavLink from "./NavLink";
 import DateDisplay from "./DateDisplay";
 import MarqueeText from "./MarqueeText";
+import UserInfo from "./UserInfo";
 
 const Navbar = () => {
   return (
@@ -33,19 +34,7 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         <div className="ml-auto flex items-center gap-2">
-          <Link
-            href="/sign-in"
-            className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
-          >
-            সাইন ইন
-          </Link>
-
-          <Link
-            href="/sign-up"
-            className="rounded-lg bg-[#00a651] px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700"
-          >
-            সাইন আপ
-          </Link>
+          <UserInfo />
         </div>
       </div>
 
