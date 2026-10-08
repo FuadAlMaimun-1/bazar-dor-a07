@@ -45,48 +45,46 @@ const ProductCard = ({ product }) => {
   return (
     <Link href={`/product/${product.slug}`}>
       <div className="rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-
         {/* Product */}
         <div className="flex items-center gap-3">
-
           {/* Emoji */}
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-2xl">
-            {product.image || product.categoryIcon || "🛒"}
+            {product?.image}
           </div>
 
           {/* Name */}
           <div>
-            <h3 className="font-bold text-gray-900">
-              {product.nameBn}
-            </h3>
+            <h3 className="font-bold text-gray-900">{product?.nameBn}</h3>
 
-            <p className="text-sm text-gray-500">
-              প্রতি {unit}
-            </p>
+            <p className="text-sm text-gray-500">প্রতি {unit}</p>
           </div>
-
         </div>
 
         {/* Price */}
-        <div className="mt-5 flex items-center justify-between border-t pt-4">
-
+        <div className="flex items-end justify-between pt-3">
           <div>
-            <p className="text-xs text-gray-400">
-              আজকের দাম
-            </p>
-
-            <p className="text-xl font-bold text-gray-900">
-              {bengaliPrice} টাকা
+            <p className="text-[11px] font-medium text-gray-400">আজকের দাম</p>
+            <p className="text-xl font-extrabold text-gray-900">
+              {bengaliPrice}{" "}
+              <span className="text-sm font-normal text-gray-700">টাকা</span>
             </p>
           </div>
 
-          {/* Change */}
-          <span
-            className={`rounded-lg px-2 py-1 text-sm ${changeClass}`}
-          >
-            {changeIcon} {bengaliChange}%
-          </span>
-
+          {/* দাম পরিবর্তনের শতাংশ ব্যাজ (Riser/Faller Indicator) */}
+          {change !== undefined && (
+            <div
+              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold ${
+                change > 0
+                  ? "bg-red-50 text-red-600"
+                  : change < 0
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-gray-100 text-gray-600"
+              }`}
+            >
+              <span>{change > 0 ? "▲" : change < 0 ? "▼" : "—"}</span>
+              <span>{bengaliChange}%</span>
+            </div>
+          )}
         </div>
       </div>
     </Link>
