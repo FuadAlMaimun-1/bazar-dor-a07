@@ -1,20 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useSession, signOut } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { FiUser, FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiUser } from "react-icons/fi";
 import toast from "react-hot-toast";
+
+import { signOut, useSession } from "@/lib/auth-client";
 
 const UserInfo = () => {
   const { data: session, isPending } = useSession();
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const user = session?.user;
 
-  // বাইরে click করলে dropdown close হবে
+  // Outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -32,6 +34,7 @@ const UserInfo = () => {
     };
   }, []);
 
+  // Sign out
   const handleSignOut = async () => {
     try {
       const { error } = await signOut();
@@ -44,35 +47,34 @@ const UserInfo = () => {
       setIsOpen(false);
       toast.success("সফলভাবে সাইন আউট করা হয়েছে");
     } catch (error) {
-      console.error("Sign out error:", error);
+      console.error(error);
       toast.error("সাইন আউট করা যায়নি");
     }
   };
 
+  // Loading
   if (isPending) {
     return (
-      <div className="text-xs font-medium text-gray-500">
-        লোড হচ্ছে...
-      </div>
+      <div className="h-10 w-24 animate-pulse rounded-full bg-gray-100" />
     );
   }
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div ref={dropdownRef} className="relative">
       {user ? (
-        <div>
-          {/* প্রোফাইল ট্রিগার বাটন */}
+        <>
+          {/* Logged in user */}
           <button
+            type="button"
             onClick={() => setIsOpen((prev) => !prev)}
             className="flex items-center gap-2 rounded-full p-1 transition hover:bg-gray-100 focus:outline-none"
           >
+            {/* Avatar */}
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-emerald-100 ring-1 ring-gray-200">
               {user.image ? (
-                <Image
+                <img
                   src={user.image}
                   alt={user.name || "User"}
-                  width={40}
-                  height={40}
                   className="h-full w-full object-cover"
                 />
               ) : (
@@ -82,27 +84,33 @@ const UserInfo = () => {
               )}
             </div>
 
-            <span className="text-sm font-semibold text-gray-800">
+            {/* Name */}
+            <span className="max-w-[140px] truncate text-sm font-semibold text-gray-800">
               {user.name || "User"}
             </span>
 
+            {/* Arrow */}
             <span className="text-xs text-gray-500">
               {isOpen ? "▴" : "▾"}
             </span>
           </button>
 
+          {/* Dropdown */}
           {isOpen && (
             <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-gray-100 bg-white p-4 shadow-xl">
+              
+              {/* User info */}
               <div className="border-b border-gray-100 pb-3">
                 <h3 className="font-bold text-gray-900">
-                  {user.name}
+                  {user.name || "User"}
                 </h3>
 
-                <p className="truncate text-xs text-gray-500">
+                <p className="mt-1 truncate text-xs text-gray-500">
                   {user.email}
                 </p>
               </div>
 
+              {/* Menu */}
               <div className="mt-3 space-y-1">
                 <Link
                   href="/profile"
@@ -114,6 +122,7 @@ const UserInfo = () => {
                 </Link>
 
                 <button
+                  type="button"
                   onClick={handleSignOut}
                   className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
                 >
@@ -123,8 +132,9 @@ const UserInfo = () => {
               </div>
             </div>
           )}
-        </div>
+        </>
       ) : (
+        /* Logged out */
         <div className="flex items-center gap-2">
           <Link
             href="/sign-in"
