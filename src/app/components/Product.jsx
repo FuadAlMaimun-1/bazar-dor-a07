@@ -8,7 +8,6 @@ const API_URL =
 
 const Product = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -19,23 +18,12 @@ const Product = () => {
         setProducts(data.products || data);
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     getProducts();
   }, []);
 
-  if (loading) {
-    return (
-      <section className="bg-[#f4f8f5] px-4 py-10">
-        <div className="mx-auto max-w-7xl">
-          <p className="py-10 text-center">Loading...</p>
-        </div>
-      </section>
-    );
-  }
 
   // দাম বেড়েছে
   const risers = products

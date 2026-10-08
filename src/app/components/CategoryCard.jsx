@@ -46,7 +46,6 @@ const CategoryCard = ({ product }) => {
         </div>
       </div>
 
-      {/* Price & Change */}
       <div className="mt-5 flex items-end justify-between border-t border-gray-50 pt-3">
         <div>
           <p className="text-[11px] font-medium text-gray-400">আজকের দাম</p>
@@ -57,7 +56,6 @@ const CategoryCard = ({ product }) => {
           </p>
         </div>
 
-        {/* Change Badge (দাম বাড়লে লাল, কমলে সবুজ) */}
         <span
           className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold ${
             change > 0

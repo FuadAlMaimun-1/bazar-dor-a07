@@ -11,27 +11,24 @@ const Navbar = () => {
     <div className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         {/* Logo */}
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#00a651]">
-          <Image
-            src="/logo-icon.png"
-            alt="Logo"
-            width={32}
-            height={32}
-          />
-        </div>
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#00a651]">
+            <Image
+              src="/logo-icon.png"
+              alt="বাজার দর Logo"
+              width={32}
+              height={32}
+            />
+          </div>
 
-        {/* Brand & Date */}
-        <div className="flex flex-col">
-          <Link
-            href="/"
-            className="text-2xl font-black leading-none tracking-tight text-gray-900"
-          >
-            বাজার দর
-          </Link>
+          <div className="flex flex-col">
+            <p className="text-2xl font-black leading-none tracking-tight text-gray-900">
+              বাজার দর
+            </p>
 
-          <DateDisplay />
-        </div>
-
+            <DateDisplay />
+          </div>
+        </Link>
         {/* Auth Buttons */}
         <div className="ml-auto flex items-center gap-2">
           <UserInfo />

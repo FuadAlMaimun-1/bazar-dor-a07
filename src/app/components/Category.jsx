@@ -76,7 +76,6 @@ const CategoryPage = ({ params }) => {
           </div>
         </div>
 
-        {/* ২. ফিগমা সর্ট ড্রপডাউন (ডানপাশে সাজান অপশন) */}
         <div className="flex items-center justify-end rounded-2xl border border-gray-100 bg-white px-6 py-4 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-gray-700">সাজান</span>
@@ -92,12 +91,10 @@ const CategoryPage = ({ params }) => {
           </div>
         </div>
 
-        {/* ৩. মোট পণ্যের সংখ্যা */}
         <p className="text-xs font-semibold text-gray-500">
           মোট {bn(sortedProducts.length)}টি পণ্য দেখানো হচ্ছে
         </p>
 
-        {/* ৪. প্রোডাক্ট গ্রিড ও স্কেলিটন লোডিং */}
         {loading ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((item) => (
@@ -115,7 +112,6 @@ const CategoryPage = ({ params }) => {
           </div>
         )}
 
-        {/* ৫. খালি পেজ স্টেট */}
         {!loading && products.length === 0 && (
           <div className="rounded-2xl border border-gray-100 bg-white py-16 text-center shadow-sm">
             <div className="text-5xl">📦</div>
