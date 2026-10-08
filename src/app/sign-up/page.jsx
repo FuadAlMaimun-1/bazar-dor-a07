@@ -209,7 +209,7 @@ const SignUpPage = () => {
           <p className="mt-6 text-center text-xs text-gray-600">
             অ্যাকাউন্ট আছে?{" "}
             <Link
-              href="/signin"
+              href="/sign-in"
               className="font-semibold text-[#00a651] transition hover:underline"
             >
               সাইন ইন করুন

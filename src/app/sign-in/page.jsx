@@ -8,7 +8,7 @@ import { signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 const SignInPage = () => {
-  // Email + Password Sign In
+
   const handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -168,7 +168,7 @@ const SignInPage = () => {
           <p className="mt-6 text-center text-xs text-gray-600">
             অ্যাকাউন্ট নেই?{" "}
             <Link
-              href="/signup"
+              href="/sign-up"
               className="font-semibold text-[#00a651] transition hover:underline"
             >
               সাইন আপ করুন
