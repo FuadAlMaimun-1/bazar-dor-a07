@@ -4,7 +4,9 @@ import Category from "@/app/components/Category";
 const CategoryPage = ({ params }) => {
   return (
    
-      <Category params={params} />
+      <Suspense fallback={null}>
+        <Category params={params} />
+      </Suspense>
 
   );
 };

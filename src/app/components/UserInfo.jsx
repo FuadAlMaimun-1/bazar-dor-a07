@@ -72,8 +72,10 @@ const UserInfo = () => {
             {/* Avatar */}
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-emerald-100 ring-1 ring-gray-200">
               {user.image ? (
-                <img
+                <Image
                   src={user.image}
+                  width={48}
+                  height={48}
                   alt={user.name || "User"}
                   className="h-full w-full object-cover"
                 />
